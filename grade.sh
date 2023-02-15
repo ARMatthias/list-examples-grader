@@ -1,7 +1,7 @@
 CPATH='.:lib/hamcrest-core-1.3.jar:lib/junit-4.13.2.jar'
 
-rm run-err.txt jUnit-out.txt javac-errs.txt
 rm -rf student-submission
+mkdir gradeReports
 git clone $1 student-submission
 echo 'Finished cloning'
 
@@ -14,21 +14,23 @@ else
     (exit 1)
 fi
 
-javac -cp .:lib/hamcrest-core-1.3.jar:lib/junit-4.13.2.jar *.java 2> javac-errs.txt
-if [[ $? -gt 0 ]] 
+javac -cp .:lib/hamcrest-core-1.3.jar:lib/junit-4.13.2.jar *.java 2> gradeReports/javac-errs.txt
+if [[ $? -neq 0 ]] 
     then 
         echo "Error: failure during compilation"
         cat javac-errs.txt | echo
         (exit 1)
 fi
 
-java .:lib/hamcrest-core-1.3.jar:lib/junit-4.13.2.jar org.junit.runner.JUnitCore FileExample 2> run-err.txt 1> jUnit-out.txt
-if [[ $? -gt 0 ]]
+java .:lib/hamcrest-core-1.3.jar:lib/junit-4.13.2.jar org.junit.runner.JUnitCore FileExample 2> gradeReports/run-err.txt 1> gradeReports/jUnit-out.txt
+out= cat gradeReports/run-err.txt 
+echo $out
+if [[ $? -neq 0 ]]
     then
         echo "Error: failure during runtinme"
         (exit 1)
 else
-    nErr= grep "FAILURES" jUnit-out.txt
+    nErr= grep "FAILURES" gradeReports/jUnit-out.txt
     if [[ -n nErr ]]
         then 
             cat jUnit-out.txt | echo
