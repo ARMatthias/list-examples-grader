@@ -15,7 +15,7 @@ else
 fi
 
 javac -cp .:lib/hamcrest-core-1.3.jar:lib/junit-4.13.2.jar *.java 2> gradeReports/javac-errs.txt
-if [[ $? -neq 0 ]] 
+if [[ $? -gt 0 ]] 
     then 
         echo "Error: failure during compilation"
         cat javac-errs.txt | echo
@@ -25,7 +25,7 @@ fi
 java .:lib/hamcrest-core-1.3.jar:lib/junit-4.13.2.jar org.junit.runner.JUnitCore FileExample 2> gradeReports/run-err.txt 1> gradeReports/jUnit-out.txt
 out= cat gradeReports/run-err.txt 
 echo $out
-if [[ $? -neq 0 ]]
+if [[ $? -gt 0 ]]
     then
         echo "Error: failure during runtinme"
         (exit 1)
