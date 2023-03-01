@@ -23,7 +23,7 @@ fi
 cd ..
 
 javac -cp $CPATH *.java 2> gradeReports/javac-errs.txt
-if [[ $? -gt 0 ]] 
+if [[ $? -ne 0 ]] 
     then 
         echo "Error: failure during compilation"
         cat gradeReports/javac-errs.txt | echo
