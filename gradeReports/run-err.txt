@@ -1,2 +1,2 @@
-Error: Could not find or load main class .;lib.hamcrest-core-1.3.jar;lib.junit-4.13.2.jar
-Caused by: java.lang.ClassNotFoundException: /;lib/hamcrest-core-1/3/jar;lib/junit-4/13/2/jar
+Error: Could not find or load main class .;lib.junit-4.13.2.jar;lib.hamcrest-core-1.3.jar
+Caused by: java.lang.ClassNotFoundException: /;lib/junit-4/13/2/jar;lib/hamcrest-core-1/3/jar

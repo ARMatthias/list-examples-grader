@@ -1,4 +1,10 @@
-CPATH='.:lib/hamcrest-core-1.3.jar:lib/junit-4.13.2.jar'
+if [[ $OSTYPE == "linux-gnu" ]] 
+    then 
+        CPATH='.:lib/hamcrest-core-1.3.jar:lib/junit-4.13.2.jar'
+elif [[ $OSTYPE == "msys" ]] 
+    then
+        CPATH='.;lib/junit-4.13.2.jar;lib/hamcrest-core-1.3.jar'
+fi
 
 rm -rf student-submission
 git clone $1 student-submission
