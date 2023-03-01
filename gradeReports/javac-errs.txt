@@ -1,0 +1,10 @@
+TestListExamples.java:6: error: cannot find symbol
+class IsMoon implements StringChecker {
+                        ^
+  symbol: class StringChecker
+TestListExamples.java:17: error: cannot find symbol
+    List<String> merged = ListExamples.merge(left, right);
+                          ^
+  symbol:   variable ListExamples
+  location: class TestListExamples
+2 errors
