@@ -1,3 +1,4 @@
+echo $? beginning
 if [[ $OSTYPE == "linux-gnu" ]] 
     then 
         CPATH=".:lib/hamcrest-core-1.3.jar:lib/junit-4.13.2.jar"
@@ -6,11 +7,16 @@ elif [[ $OSTYPE == "msys" ]]
         CPATH=".;lib/junit-4.13.2.jar;lib/hamcrest-core-1.3.jar"
 fi
 
+echo $? after compile
+
 rm -rf student-submission
+truncate -s 0 gradeReports/*.txt
 git clone $1 student-submission
-echo 'Finished cloning'
+echo $? finished cloning
 
 cd student-submission
+
+echo $? after change directory
 
 if [[ -e ListExamples.java ]]
     then
@@ -20,9 +26,14 @@ else
     (exit 1)
 fi
 
+echo $? after found ListExamples.java
+
 cd ..
 
+echo $? after change directory second time
+
 javac -cp $CPATH *.java 2> gradeReports/javac-errs.txt
+echo $? after compilation
 if [[ $? -ne 0 ]] 
     then 
         echo "Error: failure during compilation"
@@ -33,13 +44,13 @@ fi
 java -cp $CPATH org.junit.runner.JUnitCore TestListExamples 2> gradeReports/run-err.txt 1> gradeReports/jUnit-out.txt
 out= cat gradeReports/run-err.txt 
 echo $out
-if [[ $? -gt 0 ]]
+
+if [[ $? -ne 0 ]]
     then
         echo "Error: failure during runtinme"
         (exit 1)
 else
-    nErr= grep "FAILURES" gradeReports/jUnit-out.txt
-    if [[ -n nErr ]]
+    if grep "FAILURES" gradeReports/jUnit-out.txt;
         then 
             cat gradeReports/jUnit-out.txt | echo
     else
