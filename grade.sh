@@ -9,6 +9,8 @@ fi
 
 echo $? after compile
 
+rm ListExamples.java
+
 rm -rf student-submission
 truncate -s 0 gradeReports/*.txt
 git clone $1 student-submission
@@ -23,22 +25,24 @@ if [[ -e ListExamples.java ]]
         echo "ListExamples.java found"
 else
     echo "Error: File ListExamples.java not found"
-    (exit 1)
+    exit 1
 fi
 
 echo $? after found ListExamples.java
 
 cd ..
 
+cp student-submission/ListExamples.java ./
+
 echo $? after change directory second time
 
+echo `pwd`
 javac -cp $CPATH *.java 2> gradeReports/javac-errs.txt
-echo $? after compilation
 if [[ $? -ne 0 ]] 
     then 
         echo "Error: failure during compilation"
         cat gradeReports/javac-errs.txt | echo
-        (exit 1)
+        exit 1
 fi
 
 java -cp $CPATH org.junit.runner.JUnitCore TestListExamples 2> gradeReports/run-err.txt 1> gradeReports/jUnit-out.txt
@@ -48,7 +52,7 @@ echo $out
 if [[ $? -ne 0 ]]
     then
         echo "Error: failure during runtinme"
-        (exit 1)
+        exit 1
 else
     if grep "FAILURES" gradeReports/jUnit-out.txt;
         then 
