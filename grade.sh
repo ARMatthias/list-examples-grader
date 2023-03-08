@@ -1,4 +1,3 @@
-echo $? beginning
 if [[ $OSTYPE == "linux-gnu" ]] 
     then 
         CPATH=".:lib/hamcrest-core-1.3.jar:lib/junit-4.13.2.jar"
@@ -7,41 +6,31 @@ elif [[ $OSTYPE == "msys" ]]
         CPATH=".;lib/junit-4.13.2.jar;lib/hamcrest-core-1.3.jar"
 fi
 
-echo $? after compile
-
-rm ListExamples.java
-
 rm -rf student-submission
 truncate -s 0 gradeReports/*.txt
-git clone $1 student-submission
-echo $? finished cloning
-
-cd student-submission
-
-echo $? after change directory
 
 if [[ -e ListExamples.java ]]
+    then 
+        rm ListExamples.java
+fi
+
+git clone $1 student-submission
+
+if [[ -e student-submission/ListExamples.java ]]
     then
         echo "ListExamples.java found"
+        cp student-submission/ListExamples.java ./
 else
     echo "Error: File ListExamples.java not found"
     exit 1
 fi
 
-echo $? after found ListExamples.java
-
-cd ..
-
-cp student-submission/ListExamples.java ./
-
-echo $? after change directory second time
-
-echo `pwd`
 javac -cp $CPATH *.java 2> gradeReports/javac-errs.txt
 if [[ $? -ne 0 ]] 
     then 
         echo "Error: failure during compilation"
-        cat gradeReports/javac-errs.txt | echo
+        echo "Compilation feedback:"
+        cat gradeReports/javac-errs.txt 
         exit 1
 fi
 
@@ -59,6 +48,7 @@ else
             cat gradeReports/jUnit-out.txt | echo
     else
         echo "PASS: 100%"
+        echo "Grade: A"
     fi
 fi
 
