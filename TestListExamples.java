@@ -1,22 +1,40 @@
+/*
+ * Name: Rae Matthias
+ * Email: amatthias@ucsd.edu
+ * PID: A17495586
+ * 
+ * This file tests ListExamples.java for correctness
+ */
+
 import static org.junit.Assert.*;
 import org.junit.*;
 import java.util.Arrays;
 import java.util.List;
 
+/*
+ * This class creates a custom StringChecker that checks if a string is "moon"
+ */
 class IsMoon implements StringChecker {
   public boolean checkString(String s) {
     return s.equalsIgnoreCase("moon");
   }
 }
 
+/*
+ * This class creates a custom StringChecker that checks if a string is "a"
+ */
 class IsA implements StringChecker {
   public boolean checkString(String s) {
     return s.equalsIgnoreCase("a");
   }
 }
 
+/*
+ * This class aims to test ListExamples using test data
+ */
 public class TestListExamples {
 
+  // test data initialization
   List<String> threeStrF = Arrays.asList("a", "b", "c");
   List<String> fiveStr = Arrays.asList("b", "c", "d", "e", "f");
   List<String> threeStrB = Arrays.asList("e", "f", "g");
@@ -29,31 +47,49 @@ public class TestListExamples {
   List<String> test;
   List<String> expected;
 
-  @Before
-  public void setUp() {
+  // ==== Test ListExamples.merge(List<String> list1, List<String> list2) ====
 
-  }
-
+  /**
+   * Tests merge() effecting the first half of the greater list
+   */
   @Test(timeout = 500)
   public void testMergeFront() {
+
     test = ListExamples.merge(threeStrF, fiveStr);
     expected = Arrays.asList("a", "b", "b", "c", "c", "d", "e", "f");
+
     assertEquals(test, expected);
   }
 
+  /**
+   * Tests merge() effecting the latter half of the greater list
+   */
   @Test(timeout = 500) 
   public void testMergeBack() {
+
     test = ListExamples.merge(threeStrB, fiveStr);
     expected = Arrays.asList("b","c","d","e","e","f","f","g");
+
     assertEquals(test, expected);
   }
 
+  /**
+   * Tests merge() of a populated string and an empty string
+   */
   @Test(timeout = 500)
   public void testMergeEmpty() {
+
     test = ListExamples.merge(threeStrF, empty);
+
     assertEquals(test,threeStrF);
   }
 
+  // ===== Test ListExamples.filter(List<String> list, StringChecker sc) =====
+
+  /**
+   * Tests filter() with StringChecker moon if none of the 
+   * list elements are moon
+   */
   @Test(timeout = 500)
   public void testFilterNotMoon() {
 
@@ -62,6 +98,10 @@ public class TestListExamples {
     assertEquals(Arrays.asList(), test);
   }
 
+  /**
+   * Tests filter() with StringChecker moon if some of the 
+   * list elements are moon
+   */
   @Test(timeout = 500)
   public void testFilterPartialMoon() {
 
@@ -70,6 +110,10 @@ public class TestListExamples {
     assertEquals(test, Arrays.asList("moon","moon","moon"));
   }
 
+  /**
+   * Tests filter() with StringChecker moon if all of the 
+   * list elements are moon
+   */
   @Test(timeout = 500)
   public void testFilterFullMoon() {
 
@@ -78,6 +122,10 @@ public class TestListExamples {
     assertEquals(test, Arrays.asList("moon","moon"));
   }
 
+  /**
+   * Tests filter() with StringChecker a if none of the
+   * list elements are a
+   */
   @Test(timeout = 500)
   public void testFilterNotA() {
     
@@ -86,6 +134,10 @@ public class TestListExamples {
     assertEquals(test, Arrays.asList());
   }
 
+  /**
+   * Tests filter() with StringChecker a if some of the
+   * list elements are a
+   */
   @Test(timeout = 500)
   public void testFilterPartialA() {
 
@@ -94,6 +146,10 @@ public class TestListExamples {
     assertEquals(test, Arrays.asList("a", "a"));
   }
 
+  /**
+   * Tests filter() with StringChecker a if all of the
+   * list elements are a
+   */
   @Test(timeout = 500)
   public void testFilterFullA() {
 
