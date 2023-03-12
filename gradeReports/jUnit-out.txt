@@ -1,0 +1,22 @@
+JUnit version 4.13.2
+.E..E......
+Time: 0.009
+There were 2 failures:
+1) testMergeBack(TestListExamples)
+java.lang.AssertionError: expected:<[b, c, d, e, f, g]> but was:<[b, c, d, e, e, f, f, g]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at TestListExamples.testMergeBack(TestListExamples.java:48)
+2) testMergeFront(TestListExamples)
+java.lang.AssertionError: expected:<[a, b, c, d, e, f]> but was:<[a, b, b, c, c, d, e, f]>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at TestListExamples.testMergeFront(TestListExamples.java:41)
+
+FAILURES!!!
+Tests run: 9,  Failures: 2
+
