@@ -35,20 +35,51 @@ if [[ $? -ne 0 ]]
 fi
 
 java -cp $CPATH org.junit.runner.JUnitCore TestListExamples 2> gradeReports/run-err.txt 1> gradeReports/jUnit-out.txt
-out= cat gradeReports/run-err.txt 
-echo $out
+OUT=$(cat gradeReports/run-err.txt)
 
 if [[ $? -ne 0 ]]
     then
         echo "Error: failure during runtinme"
+        echo $OUT
         exit 1
 else
-    if grep "FAILURES" gradeReports/jUnit-out.txt;
+    if grep -q "FAILURES" gradeReports/jUnit-out.txt;
         then 
-            cat gradeReports/jUnit-out.txt | echo
+            cat gradeReports/jUnit-out.txt
+
+            ERROUT=$(grep 'Tests run' gradeReports/jUnit-out.txt)
+
+            IFS=", " read -a SCORES <<< $ERROUT
+
+            FAILED="${SCORES[4]}"
+            PASSED=$((9 - $FAILED))
+
+            GRADE=`perl -e "print $PASSED/9"`
+            GRADE=`perl -e "print $GRADE*100"`
+
+            SWITCH=`echo ${GRADE:0:1}`
+
+            case $SWITCH in 
+                9)
+                    LETTER="A"
+                    ;;
+                8)
+                    LETTER="B"
+                    ;;
+                7)
+                    LETTER="C"
+                    ;;
+                6)
+                    LETTER="D"
+                    ;;
+                *)
+                    LETTER="F"
+                    ;;
+            esac
+
+            echo ${GRADE:0:5}"% "$LETTER            
     else
-        echo "PASS: 100%"
-        echo "Grade: A"
+        echo "100% A"
     fi
 fi
 
