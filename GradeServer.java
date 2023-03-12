@@ -54,6 +54,9 @@ class Handler implements URLHandler {
                return "Couldn't find query parameter repo";
            }
        }
+       else if (url.getPath().equals("/testAll")) {
+          return ExecHelpers.exec(new String[]{"bash", "testGrade.sh"});
+       }
        else {
            return "Don't know how to handle that path!";
        }
