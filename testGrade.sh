@@ -47,16 +47,24 @@ for i in ${!LINKS[@]}; do
     git clone ${LINKS[$i]} student-submission
 
     # check if ListExamples.java is in student submission
-    if [[ -e student-submission/ListExamples.java ]]
-        # if exists, print found, copy student submission out
+if [[ -e student-submission/ListExamples.java ]]
+    # if exists, print found, copy student submission out
+    then
+        echo "ListExamples.java found"
+        cp student-submission/ListExamples.java ./
+else
+    SUBPATH=$(find student-submission | grep "ListExamples.java")
+    # if ListExamples.java is nested
+    if [[ -e $SUBPATH ]]
         then
-            echo "ListExamples.java found"
-            cp student-submission/ListExamples.java ./
+            GP=$(pwd)
+            cp $SUBPATH $GP
     else
-        # if not, print error, continue to next case
-        echo "Error: File ListExamples.java not found"
-        continue
+    # if not, print error, exit
+    echo "Error: File ListExamples.java not found"
+    continue
     fi
+fi
 
     # compile and check if compilation is successful
     javac -cp $CPATH *.java 2> gradeReports/javac-errs.txt
