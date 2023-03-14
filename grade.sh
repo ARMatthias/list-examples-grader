@@ -34,9 +34,17 @@ if [[ -e student-submission/ListExamples.java ]]
         echo "ListExamples.java found"
         cp student-submission/ListExamples.java ./
 else
+    SUBPATH=$(find student-submission | grep "ListExamples.java")
+    # if ListExamples.java is nested
+    if [[ -e $SUBPATH ]]
+        then
+            GP=$(pwd)
+            cp $SUBPATH $GP
+    else
     # if not, print error, exit
     echo "Error: File ListExamples.java not found"
     exit 1
+    fi
 fi
 
 # compile and check if compilation is successful

@@ -58,7 +58,7 @@ public class TestListExamples {
     test = ListExamples.merge(threeStrF, fiveStr);
     expected = Arrays.asList("a", "b", "b", "c", "c", "d", "e", "f");
 
-    assertEquals(test, expected);
+    assertEquals(expected, test);
   }
 
   /**
@@ -70,7 +70,7 @@ public class TestListExamples {
     test = ListExamples.merge(threeStrB, fiveStr);
     expected = Arrays.asList("b","c","d","e","e","f","f","g");
 
-    assertEquals(test, expected);
+    assertEquals(expected, test);
   }
 
   /**
@@ -81,7 +81,7 @@ public class TestListExamples {
 
     test = ListExamples.merge(threeStrF, empty);
 
-    assertEquals(test,threeStrF);
+    assertEquals(threeStrF,test);
   }
 
   // ===== Test ListExamples.filter(List<String> list, StringChecker sc) =====
@@ -107,7 +107,7 @@ public class TestListExamples {
 
     test = ListExamples.filter(partial,moon);
 
-    assertEquals(test, Arrays.asList("moon","moon","moon"));
+    assertEquals(Arrays.asList("moon","moon","moon"), test);
   }
 
   /**
@@ -119,7 +119,7 @@ public class TestListExamples {
 
     test = ListExamples.filter(Arrays.asList("moon","moon"),moon);
 
-    assertEquals(test, Arrays.asList("moon","moon"));
+    assertEquals(Arrays.asList("moon","moon"), test);
   }
 
   /**
@@ -131,7 +131,7 @@ public class TestListExamples {
     
     test = ListExamples.filter(threeStrB, isA);
 
-    assertEquals(test, Arrays.asList());
+    assertEquals(Arrays.asList(), test);
   }
 
   /**
@@ -143,7 +143,7 @@ public class TestListExamples {
 
     test = ListExamples.filter(partial, isA);
 
-    assertEquals(test, Arrays.asList("a", "a"));
+    assertEquals(Arrays.asList("a", "a"), test);
   }
 
   /**
@@ -155,7 +155,7 @@ public class TestListExamples {
 
     test = ListExamples.filter(Arrays.asList("a","a","a"), isA);
 
-    assertEquals(test, Arrays.asList("a","a","a"));
+    assertEquals(Arrays.asList("a","a","a"), test);
   }
 
 }
